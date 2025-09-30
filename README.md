@@ -18,11 +18,22 @@ Your project will consist of two main parts:
 
 ## Quickstart
 
-1. Use the Cloudflare CLI to create a new Worker
+1. Use the Cloudflare CLI to create a new Worker or use the [HONC stack](https://honc.dev/). HONC comes with Hono, Drizzle and a Database
 ```
+//HONC
+
+pnpm create honc-app@latest
+// - Select a DB (D1, Neon, Supabase)
+// - Say No for for OpenAPI spec
+// follow the instructions to set up the DB locally and in production in the README of the project
+
+//or Cloudflare Starter
+
 pnpm create cloudflare@latest example_app  
+
+// Select the framework starter: Hono
 ```
-- Select the framework starter: Hono
+
 
 2. Include `zod` and `mcp-lite` in your project
 ```
