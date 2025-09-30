@@ -87,6 +87,7 @@ Once you have your MCP server running, you need a client to connect to it for de
 - [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 - [Claude Desktop](https://www.anthropic.com/news/claude-desktop) (macOS)
 - Your AI IDE of choice (Claude Desktop, Windsurf, Zed-Editor, ... )
+- [Cloudflare Agents SDK](https://github.com/cloudflare/agents) as a client
 
 ## Submission
 Use [this form](https://forms.gle/tk6WTwspjHrLJjxBA) to submit your project and indicate if you'd like to demo at the end of our Hack Night. Please provide a brief description of your project and any relevant links.
