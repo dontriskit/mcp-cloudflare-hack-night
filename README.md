@@ -1,4 +1,4 @@
-# World-Wide-Web-AI-And-MCP-Hack-Night
+# World Wild Web MCP Hack Night
 Hey, thanks for joining us for WWW AI & MCP Hack Night! In this repo, you'll find everything you need to get started with the Hack Night.
 
 We recommend getting familiar with the challenge before the Hack Night, as it will help you get started faster.
@@ -11,87 +11,51 @@ We recommend getting familiar with the challenge before the Hack Night, as it wi
 ## The Challenge
 This Hack Night is all about exploration and creativity with [MCP servers](https://modelcontextprotocol.io/docs/getting-started/intro). Build something that excites you—whether it's practical, experimental, or just fun.
 
-### Core Components
-Your project will consist of two main parts:
+### Core Requirements
+Your project should use:
 1. **[mcp-lite](https://github.com/fiberplane/mcp-lite)**: A web SDK for building MCP servers
-2. **[Cloudflare Worker](https://developers.cloudflare.com/workers/)**: A serverless environment to run your MCP server
+2. **[Cloudflare Workers](https://developers.cloudflare.com/workers/)**: A serverless environment to run your MCP server
 
 ## Quickstart
 
-1. Use the Cloudflare CLI to create a new Worker or use the [HONC stack](https://honc.dev/). HONC comes with Hono, Drizzle and a Database
+1. Use `create mcp-lite` to create an mcp server with a Cloudflare Worker
+
 ```sh
-# HONC
-
-pnpm create honc-app@latest
-# - Select a DB (D1, Neon, Supabase)
-# - Say No for for OpenAPI spec
-# follow the instructions to set up the DB locally and in production in the README of the project
-
-# or Cloudflare Starter
-
-pnpm create cloudflare@latest example_app  
-
-# Select the framework starter: Hono
+# mcp-lite Starter
+# Select the Cloudflare template
+pnpm create mcp-lite@latest
 ```
 
-
-2. Include `zod` and `mcp-lite` in your project
-```sh
-pnpm add zod
-pnpm add mcp-lite
-```
-3. Start building your MCP server
-
-```ts
-import { McpServer, StreamableHttpTransport } from "mcp-lite";
-import { z } from "zod";
-
-const mcp = new McpServer({
-  name: "example-server",
-  version: "1.0.0",
-  schemaAdapter: (schema) => z.toJSONSchema(schema as z.ZodType),
-});
-
-// Define schema
-const EchoSchema = z.object({
-  message: z.string(),
-});
-
-// Add a tool
-mcp.tool("echo", {
-  description: "Echoes the input message",
-  inputSchema: EchoSchema,
-  handler: (args) => ({
-    // args is automatically typed as { message: string }
-    content: [{ type: "text", text: args.message }],
-  }),
-});
-```
-4. Run your server locally
+2. Run your server locally
+   
 ```sh
 pnpm dev
 ```
 
-5. Deploy your MCP server
+3. Deploy your MCP server
 
 Authenticate Wrangler (first time only)
 ```sh
-pnpm exec wrangler login
-pnpm exec wrangler whoami
+pnpx wrangler login
 ```
 
 ```sh
 pnpm run deploy
 ```
-You can also look in the `example/` folder for the complete code example and use it as a starting point. 
+To get warmed up with the library, create a tool that returns a fun fact about cats or dogs. 
 
 ## Recipes
+- [mcp-lite with Cloudflare's Key Value Store](https://github.com/fiberplane/mcp-lite/tree/main/examples/cloudflare-worker-kv)
+- [mcp-lite with OpenAI Apps SDK](https://github.com/fiberplane/geojournal)
 
-
+## Ideas from Previous Hack Nights
+- Spotify MCP server to create playlists while coding
+- MCP server to store interactions from AI IDE's
+- [Screenshift MCP](https://youtu.be/C0NjaRB2HyM)
 
 ## MCP Clients
 Once you have your MCP server running, you need a client to connect to it for demos. Here are some examples:
-- [Cloudflare's MCP and AI Playground](https://playground.ai.cloudflare.com/)
+- [MCP Inspector](https://modelcontextprotocol.io/docs/tools/inspector)
 - [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 - [Claude Desktop](https://www.anthropic.com/news/claude-desktop) (macOS)
 - Your AI IDE of choice (Claude Desktop, Windsurf, Zed-Editor, ... )
