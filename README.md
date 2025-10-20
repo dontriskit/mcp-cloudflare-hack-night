@@ -19,29 +19,33 @@ Your project will consist of two main parts:
 ## Quickstart
 
 1. Use the Cloudflare CLI to create a new Worker or use the [HONC stack](https://honc.dev/). HONC comes with Hono, Drizzle and a Database
-```
-//HONC
+```sh
+# HONC
 
 pnpm create honc-app@latest
-// - Select a DB (D1, Neon, Supabase)
-// - Say No for for OpenAPI spec
-// follow the instructions to set up the DB locally and in production in the README of the project
+# - Select a DB (D1, Neon, Supabase)
+# - Say No for for OpenAPI spec
+# follow the instructions to set up the DB locally and in production in the README of the project
 
-//or Cloudflare Starter
+# or Cloudflare Starter
 
 pnpm create cloudflare@latest example_app  
 
-// Select the framework starter: Hono
+# Select the framework starter: Hono
 ```
 
 
 2. Include `zod` and `mcp-lite` in your project
-```
+```sh
 pnpm add zod
 pnpm add mcp-lite
 ```
 3. Start building your MCP server
-```
+
+```ts
+import { McpServer, StreamableHttpTransport } from "mcp-lite";
+import { z } from "zod";
+
 const mcp = new McpServer({
   name: "example-server",
   version: "1.0.0",
@@ -64,26 +68,30 @@ mcp.tool("echo", {
 });
 ```
 4. Run your server locally
-```
+```sh
 pnpm dev
 ```
 
 5. Deploy your MCP server
 
 Authenticate Wrangler (first time only)
-```
+```sh
 pnpm exec wrangler login
 pnpm exec wrangler whoami
 ```
 
-```
+```sh
 pnpm run deploy
 ```
 You can also look in the `example/` folder for the complete code example and use it as a starting point. 
 
+## Recipes
+
+
 
 ## MCP Clients
 Once you have your MCP server running, you need a client to connect to it for demos. Here are some examples:
+- [Cloudflare's MCP and AI Playground](https://playground.ai.cloudflare.com/)
 - [Claude Code](https://docs.claude.com/en/docs/claude-code/overview)
 - [Claude Desktop](https://www.anthropic.com/news/claude-desktop) (macOS)
 - Your AI IDE of choice (Claude Desktop, Windsurf, Zed-Editor, ... )
