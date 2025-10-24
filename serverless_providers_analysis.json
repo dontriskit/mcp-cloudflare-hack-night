@@ -1,164 +1,600 @@
 {
   "analysis_metadata": {
     "created_at": "2025-10-24T02:56:00Z",
+    "updated_at": "2025-10-24T03:15:00Z",
     "total_providers": 11,
-    "completed_analysis": 2,
-    "pending_analysis": 9,
-    "mcp_server": "whitecontext-local"
+    "completed_analysis": 11,
+    "pending_analysis": 0,
+    "mcp_server": "whitecontext-local",
+    "mcp_server_url": "https://whitecontext-mcp.maksym.workers.dev/mcp"
+  },
+  "category_overview": {
+    "edge_platforms": ["cloudflare", "cloudflare_workers", "deno_deploy", "fly_io"],
+    "traditional_cloud": ["aws_lambda", "azure_functions", "google_cloud_functions"],
+    "modern_paas": ["vercel", "netlify", "railway", "render"]
   },
   "providers": {
+    "cloudflare": {
+      "job_id": "b443ff70-3d4a-4d32-8b55-aef208832089",
+      "status": "completed",
+      "url": "https://cloudflare.com",
+      "company_name": "Cloudflare",
+      "category": "Edge Platform (Parent Company)",
+      "founded": "2009 (IPO 2019)",
+      "funding": "Publicly traded (NYSE: NET)",
+      "tldr": "Cloudflare provides a comprehensive 'connectivity cloud' platform, integrating networking, security, and performance. Leveraging a massive global network, it offers CDN, WAF, Zero Trust, and serverless AI, helping businesses accelerate applications, enhance security, and reduce costs.",
+      "business_model": {
+        "type": "Mixed (B2B/B2C)",
+        "revenue_model": "Tiered subscription (Free, Pro, Business, Enterprise) with usage-based pricing",
+        "target_market": "Large enterprises, SMBs, individual developers, partner ecosystem"
+      },
+      "scale_indicators": [
+        "78M average HTTP requests/sec (peak 106M)",
+        "330 cities in 125+ countries",
+        "405 Tbps network capacity",
+        "Blocks 190B daily threats",
+        "95% of Internet population within 50ms"
+      ],
+      "pricing": {
+        "free_tier": "Available with basic features",
+        "pro": "Starting at $20/month",
+        "business": "Starting at $200/month",
+        "enterprise": "Custom pricing"
+      },
+      "key_features": [
+        "CDN with global reach",
+        "WAF with ML threat detection",
+        "Zero Trust security (ZTNA)",
+        "Workers serverless platform",
+        "R2 storage (zero egress fees)",
+        "D1 serverless SQL database",
+        "Workers AI for edge inference"
+      ],
+      "competitive_advantages": [
+        "Massive global network (330+ cities)",
+        "Single-pass traffic inspection",
+        "Zero egress fees for R2 storage",
+        "Comprehensive security and performance",
+        "Edge AI capabilities"
+      ],
+      "notable_customers": [
+        "Slack", "Netlify", "Supabase", "Salesforce", "Spotify",
+        "Stripe", "Bank of America", "Tencent", "Shopify", "Discord"
+      ],
+      "compliance": ["ISO 27001", "SOC 2", "HIPAA-ready"]
+    },
     "cloudflare_workers": {
       "job_id": "1ed70885-e9df-4c17-a429-edcd96e24da7",
       "status": "completed",
       "url": "https://workers.cloudflare.com",
       "company_name": "Cloudflare Workers",
-      "tldr": "Cloudflare Workers is a globally distributed serverless developer platform leveraging Cloudflare's vast network to run code at the edge in 330+ cities. It offers low-latency compute, AI, and storage solutions with minimal cold starts, predictable pricing, and robust developer tools, positioning itself as an 'AI Cloud' to simplify infrastructure for developers.",
+      "category": "Edge Serverless Platform",
+      "parent_company": "Cloudflare",
+      "tldr": "Cloudflare Workers is a globally distributed serverless platform leveraging Cloudflare's network to run code at the edge in 330+ cities with minimal cold starts, predictable pricing, and AI capabilities.",
       "business_model": {
         "type": "B2B",
-        "revenue_model": "Consumption-based, pay-as-you-go, freemium model with transparent pricing for compute, storage, and deployed scripts.",
-        "target_market": "Developers, engineering teams, businesses, and platforms requiring highly scalable, low-latency, and globally distributed application and AI infrastructure."
+        "revenue_model": "Consumption-based, pay-as-you-go, freemium",
+        "target_market": "Developers, platforms, AI workloads requiring low-latency edge compute"
       },
       "scale_indicators": [
-        "Part of Cloudflare's infrastructure powering 20% of the Internet",
-        "Network capacity of 405 Tbps",
-        "Serves over 84 million HTTP requests per second"
+        "Part of infrastructure powering 20% of Internet",
+        "405 Tbps network capacity",
+        "84M HTTP requests/sec"
       ],
       "pricing": {
-        "free_tier": "100k requests/day, 10 ms CPU/request",
-        "paid_tier": "$0.30 per million requests, $0.02 per million CPU ms"
+        "free_tier": "100k requests/day, 10ms CPU/request",
+        "paid": "$0.30/M requests, $0.02/M CPU ms"
       },
       "key_features": [
-        "Workers (global serverless functions)",
-        "Containers (support for any language, anywhere)",
+        "Global serverless functions (330+ cities)",
+        "Container support (any language)",
         "Durable Objects (stateful compute)",
-        "Browser Rendering (automated browsers)",
-        "Workflows (process orchestration)",
-        "One-command deployment to 330+ cities",
-        "Minimal cold starts",
-        "AI capabilities at the edge"
+        "Browser Rendering",
+        "Workflows (orchestration)",
+        "No cold starts",
+        "Workers AI (edge AI inference)",
+        "R2, KV, D1 storage options"
       ],
       "competitive_advantages": [
-        "Extensive global network (330+ cities, 50ms latency for 95% of world's population)",
-        "Elimination of cold starts for serverless functions",
-        "Predictable, consumption-based pricing (pay only for active compute)",
-        "Battle-tested infrastructure powering 20% of the Internet",
-        "Comprehensive developer platform with compute, AI, storage, and media solutions"
+        "Eliminated cold starts",
+        "50ms latency for 95% of global population",
+        "Pay only for active compute time",
+        "Battle-tested infrastructure (20% of Internet)",
+        "Comprehensive edge platform (compute, AI, storage, media)"
       ],
       "notable_customers": [
-        "Anthropic",
-        "Asana",
-        "Atlassian",
-        "Block",
-        "Canva",
-        "DoorDash",
-        "Intercom",
-        "MLB",
-        "PayPal",
-        "Porsche",
-        "Shopify",
-        "Signal",
-        "Stripe",
-        "Wix"
+        "Anthropic", "Stripe", "PayPal", "Shopify", "DoorDash",
+        "Atlassian", "Block", "Canva", "Intercom", "Signal"
       ]
+    },
+    "vercel": {
+      "job_id": "b6b11e63-4668-41a3-8f52-e6bcf3b0ac2a",
+      "status": "completed",
+      "url": "https://vercel.com",
+      "company_name": "Vercel",
+      "category": "Frontend Cloud Platform",
+      "founded": "Founded by Guillermo Rauch (Next.js creator)",
+      "funding": "Backed by Accel, Bedrock, GV, Tiger Global",
+      "tldr": "Vercel offers the Frontend Cloud, a developer platform for building, scaling, and securing web applications. Creator of Next.js, Vercel excels in performance, DX, and cost efficiency through Fluid Compute and global Edge Network.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Tiered subscription with usage-based billing",
+        "target_market": "Developers, teams, enterprises building modern web apps"
+      },
+      "scale_indicators": [
+        "Over 1 trillion Fluid Compute invocations",
+        "264% ROI for Enterprise customers",
+        "Hundreds of global Edge locations, 18 regions"
+      ],
+      "pricing": {
+        "hobby": "Free",
+        "pro": "$20/month + usage",
+        "enterprise": "Custom pricing with SLAs"
+      },
+      "key_features": [
+        "Zero-config deployments",
+        "Preview environments (every PR)",
+        "Fluid Compute (Active CPU pricing)",
+        "Edge Network (global delivery)",
+        "AI SDK and AI Gateway",
+        "Next.js optimization",
+        "Partial Prerendering",
+        "Turborepo (monorepo builds)"
+      ],
+      "competitive_advantages": [
+        "Creator of Next.js (optimal integration)",
+        "Global Edge Network (low latency)",
+        "Exceptional DX (zero-config)",
+        "Cost efficiency (Active CPU pricing)",
+        "Enterprise compliance (SOC 2, ISO, HIPAA)",
+        "AI-first development tools"
+      ],
+      "notable_customers": [
+        "Notion", "Stripe", "Helly Hansen", "Adobe", "Under Armour",
+        "Netflix", "Zapier", "Loom", "HashiCorp", "eBay", "Washington Post"
+      ],
+      "compliance": ["SOC 2 Type 2", "PCI DSS", "ISO 27001", "HIPAA BAA (add-on)"]
     },
     "netlify": {
       "job_id": "68e2aa25-16bb-4132-9ada-ff6074e81d3a",
       "status": "completed",
       "url": "https://netlify.com",
       "company_name": "Netlify",
-      "tldr": "Netlify is an AI-native web development platform pioneering the Composable Web and Jamstack architectures. Serving over 5 million developers, it simplifies building, deploying, and scaling modern web applications with features like global edge delivery, serverless functions, and AI-driven workflows. With $212 million in funding, Netlify targets individual developers to large enterprises, emphasizing developer experience, speed, and compliance.",
+      "category": "Jamstack/Frontend Cloud",
+      "founded": "2014",
+      "funding": "$212M (Andreessen Horowitz, Bessemer, BOND, Kleiner Perkins)",
+      "tldr": "Netlify is an AI-native web development platform pioneering Jamstack. Serving 5M+ developers, it simplifies building modern web apps with edge delivery, serverless functions, and AI workflows.",
       "business_model": {
         "type": "B2B",
-        "revenue_model": "Freemium SaaS with tiered, credit-based usage",
-        "target_market": "Web developers, startups, mid-market businesses, large enterprises, e-commerce, SaaS, agencies, and open-source projects."
+        "revenue_model": "Freemium SaaS with credit-based usage",
+        "target_market": "Web developers, startups, enterprises, agencies"
       },
       "scale_indicators": [
-        "Over 5 million developers have signed up as of September 2024",
-        "Over a billion unique visitors access URLs running on Netlify monthly",
-        "Powers 50 million websites"
+        "5M+ developers",
+        "1B+ unique visitors monthly",
+        "Powers 50M websites"
       ],
       "pricing": {
-        "free_tier": "Available",
+        "free": "Available",
         "personal": "$9/month",
         "pro": "$20/member/month",
-        "enterprise": "Custom pricing"
+        "enterprise": "Custom"
       },
       "key_features": [
-        "Deploy Previews (automatic URLs for collaborative feedback)",
-        "Agent Runners (AI workflows for code changes)",
-        "AI Gateway (call AI models without managing API keys)",
-        "Functions (serverless APIs, scheduled & background functions)",
-        "Storage Primitives (Netlify DB for Postgres, Netlify Blobs)",
-        "DDoS Protection, WAF, Smart secret detection",
-        "Global Edge Network (100+ locations)",
-        "Git Integration (GitHub, GitLab, Bitbucket)",
-        "Visual Editor (integrated with Stackbit)"
+        "Deploy Previews (collaborative)",
+        "Agent Runners (AI workflows)",
+        "AI Gateway",
+        "Serverless Functions",
+        "Netlify DB (Postgres), Blobs",
+        "DDoS Protection, WAF",
+        "Global Edge (100+ locations)",
+        "Visual Editor (Stackbit)"
       ],
       "competitive_advantages": [
-        "Superior developer experience ('no-ops' approach, Git integration, framework agnostic)",
-        "Exceptional speed and performance through a global Edge Network",
-        "Strong focus on Composable Web architecture",
-        "Early and deep integration of AI into development workflows",
-        "High compliance standards (SOC 2, ISO, PCI, HIPAA for enterprise)",
-        "Coined and pioneered Jamstack architecture"
+        "Jamstack pioneer (coined the term)",
+        "'No-ops' developer experience",
+        "Framework agnostic",
+        "Deep AI integration",
+        "HIPAA compliant (enterprise)",
+        "Composable Web architecture"
       ],
       "notable_customers": [
-        "Confluent",
-        "LG",
-        "Mattel",
-        "Nestlé",
-        "Riot Games",
-        "Peloton",
-        "Nike",
-        "Twilio",
-        "DocuSign"
+        "Nike", "Twilio", "DocuSign", "Riot Games", "Peloton",
+        "Nestlé", "LG", "Mattel", "Confluent"
       ],
-      "funding": "$212 million from investors including Andreessen Horowitz, Bessemer Venture Partners, BOND, EQT Ventures, Kleiner Perkins"
-    },
-    "vercel": {
-      "job_id": "b6b11e63-4668-41a3-8f52-e6bcf3b0ac2a",
-      "status": "processing",
-      "url": "https://vercel.com"
+      "compliance": ["SOC 2", "ISO 27001", "PCI", "HIPAA (enterprise)"]
     },
     "aws_lambda": {
       "job_id": "825a385b-285d-4f4b-a51c-35ec637b3ba4",
-      "status": "processing",
-      "url": "https://aws.amazon.com/lambda"
+      "status": "completed",
+      "url": "https://aws.amazon.com/lambda",
+      "company_name": "AWS Lambda",
+      "category": "Traditional Cloud Serverless",
+      "parent_company": "Amazon Web Services (AWS)",
+      "founded": "2006 (AWS), Lambda launched 2014",
+      "tldr": "AWS Lambda is the world's most comprehensive serverless compute service, allowing code execution without managing servers. With automatic scaling, event-driven architecture, and deep AWS ecosystem integration, it provides cost-effective, scalable solutions.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Pay-as-you-go (requests + duration), Savings Plans available",
+        "target_market": "Organizations globally (startups to Fortune 500)"
+      },
+      "scale_indicators": [
+        "Millions of organizations globally",
+        "120 Availability Zones, 38 Regions",
+        "140K+ partners in AWS Partner Network",
+        "99.54% uptime (APAC, Jan 2022-Jun 2024)"
+      ],
+      "pricing": {
+        "free_tier": "1M requests, 400K GB-seconds/month",
+        "paid": "Tiered pricing, billed per 1ms",
+        "savings_plans": "Up to 17% savings (1-3 year commitments)"
+      },
+      "key_features": [
+        "Event-driven execution",
+        "Supports 8+ languages (Java, Python, Node.js, Go, Rust, etc.)",
+        "Auto-scaling (1,000 concurrent executions per 10s)",
+        "SnapStart (10x faster Java startup)",
+        "Graviton2 (34% better price-performance)",
+        "Integration with 220+ AWS services",
+        "Provisioned Concurrency (sub-second response)",
+        "Container images (up to 10GB)"
+      ],
+      "competitive_advantages": [
+        "Broadest cloud platform (220+ services)",
+        "Most extensive compliance (100+ certifications)",
+        "Cost optimization (Spot, Savings Plans)",
+        "Hybrid/edge deployment (Outposts, Local Zones)",
+        "Massive partner ecosystem",
+        "Custom silicon (Graviton)"
+      ],
+      "notable_customers": [
+        "Capital One", "DoorDash", "Expedia", "Lyft", "Netflix",
+        "Moderna", "Redfin", "Coca-Cola"
+      ],
+      "compliance": ["PCI-DSS", "HIPAA", "FedRAMP", "GDPR", "FIPS 140-2", "SOC", "ISO"]
     },
     "azure_functions": {
       "job_id": "84893ecd-4f68-472b-94c8-5b2dafcca55d",
-      "status": "processing",
-      "url": "https://azure.microsoft.com/en-us/products/functions"
+      "status": "completed",
+      "url": "https://azure.microsoft.com/en-us/products/functions",
+      "company_name": "Azure Functions",
+      "category": "Traditional Cloud Serverless",
+      "parent_company": "Microsoft Azure",
+      "tldr": "Azure Functions is Microsoft's leading serverless service enabling event-driven code execution without infrastructure management. With multi-language support, flexible hosting, and deep Azure ecosystem integration, it targets businesses seeking scalable, AI-powered cloud solutions.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Consumption-based (pay-as-you-go) + Premium/Dedicated plans",
+        "target_market": "Developers, enterprises, IT departments building intelligent cloud apps"
+      },
+      "scale_indicators": [
+        "60+ Azure regions globally",
+        "Azure Integration Services: 65K+ customers",
+        "295% ROI (Forrester Study)"
+      ],
+      "pricing": {
+        "consumption": "Pay per execution + GB-s (1M free executions, 400K GB-s/month)",
+        "flex_consumption": "Enhanced consumption (250K free executions, 100K GB-s/month)",
+        "premium": "Dedicated resources, no cold start",
+        "savings": "Hybrid Benefit, Savings Plan, Reservations"
+      },
+      "key_features": [
+        "Supports 8+ languages (C#, Java, JS, Python, PowerShell, F#, Rust, Go)",
+        "Durable Functions (workflow orchestration)",
+        "Multiple hosting (Consumption, Flex, Premium, Container Apps, Arc)",
+        "Deep Azure AI integration (AI Foundry, OpenAI)",
+        "Hybrid/multicloud via Azure Arc",
+        "Built-in enterprise networking"
+      ],
+      "competitive_advantages": [
+        "Extensive Azure ecosystem integration",
+        "Broadest language support",
+        "Advanced workflow orchestration (Durable Functions)",
+        "Flexible hosting options",
+        "Strong AI/generative AI focus",
+        "100+ compliance certifications",
+        "Hybrid/multicloud (Azure Arc)"
+      ],
+      "notable_customers": [
+        "Pixel Lab", "Coca-Cola", "Pacers Sports", "Accenture",
+        "KPMG", "ASDA", "VS&Co"
+      ],
+      "compliance": ["100+ Microsoft Azure certifications", "HIPAA", "FedRAMP", "GDPR"]
     },
     "google_cloud_functions": {
       "job_id": "1daf538c-275a-4549-89fc-baa11e6216e0",
-      "status": "processing",
-      "url": "https://cloud.google.com/functions"
+      "status": "completed",
+      "url": "https://cloud.google.com/functions",
+      "company_name": "Google Cloud Functions",
+      "category": "Traditional Cloud Serverless",
+      "parent_company": "Google Cloud",
+      "tldr": "Google Cloud Functions (now Cloud Run functions) is a fully managed serverless platform with GPU support, multi-event triggers, and deep AI/ML integration. Part of Google Cloud's comprehensive platform emphasizing generative AI and data analytics.",
+      "business_model": {
+        "type": "Mixed (B2B focus)",
+        "revenue_model": "Pay-as-you-go consumption with automatic savings and prepaid options",
+        "target_market": "Global enterprises, startups, developers across industries"
+      },
+      "scale_indicators": [
+        "150+ products and services",
+        "~90% of gen AI unicorns are customers",
+        "60%+ of funded gen AI startups",
+        "Processes 3.8TB/day (customer example)",
+        "58B model predictions daily (Credit Karma)"
+      ],
+      "pricing": {
+        "free_tier": "25+ products free up to monthly limits",
+        "new_customers": "$300 free credits",
+        "model": "Pay-as-you-go with automatic discounts"
+      },
+      "key_features": [
+        "Unified serverless (Cloud Run functions)",
+        "NVIDIA GPU support",
+        "Multi-event trigger management",
+        "Direct VPC egress (high-performance)",
+        "Cloud Storage volume mounting",
+        "Google-managed runtimes",
+        "Traffic splitting, revision control",
+        "Auto-scales zero to millions"
+      ],
+      "competitive_advantages": [
+        "Industry-leading AI/ML (Vertex AI, Gemini)",
+        "Robust global infrastructure",
+        "Unified data cloud strategy",
+        "Strong security & compliance",
+        "Hybrid/multicloud (Anthos)",
+        "100% renewable energy operations",
+        "Advanced data analytics (BigQuery)"
+      ],
+      "notable_customers": [
+        "Commerzbank", "HSBC", "Discover", "TD", "Citi", "PayPal",
+        "Telecom Argentina", "Instacart", "Smart Parking", "Globo"
+      ],
+      "compliance": ["FIPS 140-2 Level 3", "ISO 27017/27018", "SOC 2", "FISC Japan", "PCI"]
     },
     "deno_deploy": {
       "job_id": "92284187-e2b3-47f6-81aa-46a271704016",
-      "status": "processing",
-      "url": "https://deno.com/deploy"
+      "status": "completed",
+      "url": "https://deno.com/deploy",
+      "company_name": "Deno Deploy",
+      "category": "Edge Serverless Platform",
+      "founded": "March 2021",
+      "funding": "$21M Series A (Sequoia Capital, June 2022)",
+      "tldr": "Deno offers a modern, secure TypeScript/JavaScript runtime and serverless platform with V8 isolates for fast cold starts. With global edge network and strong Node.js/npm compatibility, it serves developers building performant, secure applications.",
+      "business_model": {
+        "type": "Mixed (Open Source + Commercial SaaS)",
+        "revenue_model": "SaaS tiers + usage-based + Enterprise support",
+        "target_market": "Developers, startups, enterprises requiring secure JS/TS execution"
+      },
+      "scale_indicators": [
+        "400K+ active users",
+        "100K+ GitHub stars",
+        "2M+ community modules",
+        "10B+ requests/month (Deno Deploy)",
+        "255M requests/day (Netlify Subhosting)"
+      ],
+      "pricing": {
+        "free": "Available",
+        "pro": "$20/month with overages",
+        "enterprise": "Custom pricing"
+      },
+      "key_features": [
+        "Native TypeScript (zero config)",
+        "Secure-by-default permissions",
+        "Built-in toolchain (linter, formatter, test runner)",
+        "V8 isolates (fast cold starts)",
+        "Node.js/npm compatibility",
+        "Deno KV (distributed database)",
+        "Deno Queues (messaging)",
+        "Global edge (25 PoPs)"
+      ],
+      "competitive_advantages": [
+        "Secure-by-default architecture",
+        "Native TypeScript support",
+        "Comprehensive built-in tools",
+        "Web standards adherence (TC39, WinterCG)",
+        "V8 isolates (ultra-fast cold starts)",
+        "Strong Node.js compatibility",
+        "Global edge network"
+      ],
+      "notable_customers": [
+        "Slack", "Netlify", "Supabase", "Salesforce", "Spotify",
+        "Stripe", "Bank of America", "Tencent", "Deco.cx"
+      ],
+      "compliance": ["ISO 27001:2022", "SOC 2 Type II"]
     },
     "fly_io": {
       "job_id": "b5476860-8e05-43c5-827d-bcfefa8460a5",
-      "status": "processing",
-      "url": "https://fly.io"
+      "status": "completed",
+      "url": "https://fly.io",
+      "company_name": "Fly.io",
+      "category": "Edge Platform (Micro-VMs)",
+      "founded": "2017 (Platform launched Jan 2020)",
+      "tldr": "Fly.io is a developer-focused cloud platform deploying containerized apps as Firecracker micro-VMs to 30+ global regions. Combining PaaS simplicity with IaaS control, it offers pay-as-you-go pricing, ~300ms boot times, and innovative solutions like LiteFS and FLAME pattern.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Usage-based pay-as-you-go + tiered support + compliance add-ons",
+        "target_market": "Developers, teams, enterprises needing globally distributed low-latency apps"
+      },
+      "scale_indicators": [
+        "30+ regions globally",
+        "Thousands of micro-VMs per server",
+        "100% SLA compliance (paid support)",
+        "53 min median first response time"
+      ],
+      "pricing": {
+        "model": "Pay-as-you-go (per-second VM, storage, bandwidth)",
+        "free_bandwidth": "160GB/month",
+        "support": "Standard, Premium, Enterprise tiers"
+      },
+      "key_features": [
+        "Firecracker micro-VMs (~300ms boot)",
+        "Docker image support",
+        "Machines API (VM management)",
+        "Fly Postgres (managed PostgreSQL)",
+        "LiteFS Cloud (distributed SQLite)",
+        "Persistent Volumes",
+        "FLAME pattern (elastic scaling)",
+        "Global edge network"
+      ],
+      "competitive_advantages": [
+        "Sub-second VM boot times",
+        "PaaS simplicity + IaaS control",
+        "Global low-latency routing",
+        "Data locality (LiteFS)",
+        "Innovative serverless (FLAME pattern)",
+        "Hardcore dev support",
+        "Cost efficiency"
+      ],
+      "notable_customers": [
+        "Supabase", "Tailscale", "Tigris", "Upstash", "Turso",
+        "Mailgun", "Fanatics", "SavvyCal", "Acast", "Glide"
+      ],
+      "compliance": ["HIPAA", "BAAs", "SOC2"]
     },
     "railway": {
       "job_id": "a8722246-889b-4cd6-9db2-9ea1337820d1",
-      "status": "processing",
-      "url": "https://railway.app"
+      "status": "completed",
+      "url": "https://railway.app",
+      "company_name": "Railway",
+      "category": "Modern PaaS",
+      "founded": "2020",
+      "funding": "Announced May 2022 (amount undisclosed)",
+      "tldr": "Railway provides frictionless PaaS with usage-based, pay-per-second pricing enabling ~40% cost savings. With SOC 2 Type II and HIPAA compliance, it serves hobbyists to enterprises emphasizing speed, reliability, and developer experience.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Usage-based billing (CPU, memory, volumes, egress) + monthly minimums",
+        "target_market": "Individual developers, teams, enterprises"
+      },
+      "scale_indicators": [
+        "500K+ users",
+        "2M builds (Nov 2022)",
+        "27 employees globally"
+      ],
+      "pricing": {
+        "free": "Available",
+        "hobby": "$5 min/month",
+        "pro": "$20 min/month",
+        "enterprise": "Custom",
+        "model": "Pay-per-second ($0.00000386/GB-sec memory)"
+      },
+      "key_features": [
+        "GitHub, Docker, CLI deployment",
+        "Preview environments",
+        "Monorepo support",
+        "Config as Code (TOML/JSON)",
+        "One-click rollbacks",
+        "Any open-source database",
+        "Private networking",
+        "Railway Metal (dedicated infra)",
+        "Multi-region deployment"
+      ],
+      "competitive_advantages": [
+        "Pay-per-second pricing (~40% savings)",
+        "Frictionless developer experience",
+        "Broad tech support (Node, Ruby, Rust, Python, etc.)",
+        "Enterprise compliance (SOC 2, HIPAA)",
+        "Railway Metal (dedicated)",
+        "AI assistance"
+      ],
+      "notable_customers": [
+        "Senja", "Peerlist", "sock8"
+      ],
+      "case_study_savings": [
+        "Senja: 75% cost reduction ($400 → <$100/month)",
+        "Peerlist: 80% cost reduction + 10x user growth",
+        "sock8: 90% cost reduction ($2000 → <$200/month)",
+        "Individual dev: 96% savings ($80 → $3/month)"
+      ],
+      "compliance": ["SOC 2 Type I (2023)", "SOC 2 Type II (2024)", "HIPAA BAAs (2023)"]
     },
     "render": {
       "job_id": "05b94129-f884-4b04-b08c-da2704bb57c8",
-      "status": "processing",
-      "url": "https://render.com"
+      "status": "completed",
+      "url": "https://render.com",
+      "company_name": "Render",
+      "category": "Modern PaaS",
+      "founded": "Not specified",
+      "funding": "$155M+ ($80M AI era Jan 2025, $50M Series B June 2023, $20M Series A Nov 2021)",
+      "tldr": "Render offers an end-to-end cloud platform for deploying, scaling, and securing applications. With $155M+ funding, it emphasizes developer experience, competitive pricing, and enterprise compliance (ISO 27001, HIPAA) for businesses of all scales.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Tiered subscription + usage-based (prorated to the second)",
+        "target_market": "Developers, teams, startups to enterprises"
+      },
+      "scale_indicators": [
+        "$155M+ total funding",
+        "Scaled customers 1 → 50+ engineers",
+        "Unlimited team members (Organization/Enterprise)"
+      ],
+      "pricing": {
+        "hobby": "Entry tier",
+        "professional": "Mid tier",
+        "organization": "Team tier",
+        "enterprise": "Custom with SLAs"
+      },
+      "key_features": [
+        "Git & Docker deployment",
+        "Zero-downtime deploys",
+        "Preview environments (Professional+)",
+        "IaC (Blueprints, Terraform)",
+        "Autoscaling (up to 100 instances)",
+        "Global CDN",
+        "Private networking",
+        "RBAC, SSO, SCIM",
+        "Render Postgres (PITR, HA, replicas)",
+        "Render Key Value (Valkey 8)",
+        "Render MCP Server (AI management)"
+      ],
+      "competitive_advantages": [
+        "Modern infrastructure & DX",
+        "Out-of-box enterprise security",
+        "Competitive pricing (per-second)",
+        "Reliability & accessibility",
+        "AI-era alignment (MCP Server)",
+        "Heroku migration tools"
+      ],
+      "notable_customers": [
+        "Rime", "Evolve", "ReadMe", "Thatch", "Reservamos SaaS",
+        "Fey", "Watershed", "Felt", "Propeller Digital"
+      ],
+      "case_study_metrics": [
+        "Evolve: 80% less complexity than AWS",
+        "ReadMe: 90s downtime (Heroku migration)",
+        "Fey: $72K annual savings",
+        "Watershed: 1→50+ engineers, weeks/months → hours/days delivery",
+        "Felt: Ships >15 features/day"
+      ],
+      "compliance": ["ISO 27001:2022 (Nov 2024)", "SOC 2 Type 2 (Feb 2023)", "GDPR-DPA", "EU-US DPF", "HIPAA (June 2025)"]
+    }
+  },
+  "summary_comparison": {
+    "by_category": {
+      "edge_platforms": {
+        "providers": ["Cloudflare Workers", "Deno Deploy", "Fly.io"],
+        "key_characteristics": "Ultra-low latency, global distribution, fast cold starts, edge-first architecture"
+      },
+      "traditional_cloud": {
+        "providers": ["AWS Lambda", "Azure Functions", "Google Cloud Functions"],
+        "key_characteristics": "Massive ecosystems, enterprise features, deep cloud integration, mature compliance"
+      },
+      "modern_paas": {
+        "providers": ["Vercel", "Netlify", "Railway", "Render"],
+        "key_characteristics": "Developer experience focus, Git integration, preview environments, cost optimization"
+      }
     },
-    "cloudflare": {
-      "job_id": "b443ff70-3d4a-4d32-8b55-aef208832089",
-      "status": "processing",
-      "url": "https://cloudflare.com"
+    "pricing_models": {
+      "consumption_based": ["AWS Lambda", "Azure Functions", "Google Cloud Functions", "Cloudflare Workers"],
+      "freemium_tiers": ["Vercel", "Netlify", "Railway", "Render", "Deno Deploy"],
+      "pay_per_second": ["Railway", "Render"],
+      "free_tier_generous": ["Cloudflare Workers (100k req/day)", "AWS Lambda (1M req/month)", "Deno Deploy"]
+    },
+    "key_differentiators": {
+      "best_for_edge": "Cloudflare Workers (330+ cities, no cold starts)",
+      "best_for_frontend": "Vercel (Next.js creator), Netlify (Jamstack pioneer)",
+      "best_for_typescript": "Deno Deploy (native TypeScript)",
+      "best_for_cost_optimization": "Railway (pay-per-second, 40% savings)",
+      "best_for_enterprise": "AWS Lambda (broadest ecosystem), Azure Functions (Microsoft integration)",
+      "best_for_compliance": "Render (ISO 27001, HIPAA), Netlify (HIPAA), AWS (100+ certs)",
+      "best_for_micro_vms": "Fly.io (Firecracker, 300ms boot)"
     }
   }
 }
