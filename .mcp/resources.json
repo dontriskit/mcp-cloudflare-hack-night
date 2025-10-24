@@ -1,0 +1,212 @@
+{
+  "resources": [
+    {
+      "uri": "job://{job_id}/result",
+      "name": "Job Analysis Result",
+      "description": "Complete GTM intelligence analysis result for a specific job",
+      "mimeType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "The analyzed company website URL"
+          },
+          "gtm_context": {
+            "type": "object",
+            "description": "Comprehensive GTM intelligence data",
+            "properties": {
+              "company_name": {
+                "type": "string",
+                "description": "Official company name"
+              },
+              "tldr": {
+                "type": "string",
+                "description": "Brief company summary and value proposition"
+              },
+              "business_model": {
+                "type": "object",
+                "description": "Business model analysis",
+                "properties": {
+                  "type": {"type": "string"},
+                  "revenue_streams": {"type": "array"},
+                  "pricing_model": {"type": "string"},
+                  "target_market": {"type": "string"}
+                }
+              },
+              "products_services": {
+                "type": "array",
+                "description": "List of products and services",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {"type": "string"},
+                    "description": {"type": "string"},
+                    "category": {"type": "string"},
+                    "target_segment": {"type": "string"}
+                  }
+                }
+              },
+              "gtm_intelligence": {
+                "type": "object",
+                "description": "Go-to-market intelligence",
+                "properties": {
+                  "ideal_customer_profile": {"type": "object"},
+                  "value_propositions": {"type": "array"},
+                  "pain_points_addressed": {"type": "array"},
+                  "decision_makers": {"type": "array"},
+                  "sales_process": {"type": "object"},
+                  "competitive_advantages": {"type": "array"}
+                }
+              },
+              "company_info": {
+                "type": "object",
+                "description": "Company background information",
+                "properties": {
+                  "industry": {"type": "string"},
+                  "size": {"type": "string"},
+                  "founded": {"type": "string"},
+                  "location": {"type": "string"},
+                  "funding": {"type": "object"}
+                }
+              },
+              "technology": {
+                "type": "object",
+                "description": "Technology stack and integrations",
+                "properties": {
+                  "tech_stack": {"type": "array"},
+                  "integrations": {"type": "array"},
+                  "api_availability": {"type": "boolean"},
+                  "security_features": {"type": "array"}
+                }
+              },
+              "social_proof": {
+                "type": "object",
+                "description": "Social proof and credibility indicators",
+                "properties": {
+                  "customers": {"type": "array"},
+                  "case_studies": {"type": "array"},
+                  "testimonials": {"type": "array"},
+                  "awards": {"type": "array"},
+                  "partnerships": {"type": "array"}
+                }
+              },
+              "contact": {
+                "type": "object",
+                "description": "Contact and sales information",
+                "properties": {
+                  "sales_process": {"type": "string"},
+                  "contact_methods": {"type": "array"},
+                  "demo_availability": {"type": "boolean"},
+                  "pricing_transparency": {"type": "string"}
+                }
+              },
+              "intelligence_gaps": {
+                "type": "array",
+                "description": "Areas where additional research may be needed"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "uri": "user://dashboard",
+      "name": "User Dashboard",
+      "description": "User account dashboard with job history, credit status, and usage statistics",
+      "mimeType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "user_info": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string"},
+              "email": {"type": "string"},
+              "credits_remaining": {"type": "integer"},
+              "is_active": {"type": "boolean"}
+            }
+          },
+          "recent_jobs": {
+            "type": "array",
+            "description": "Recent analysis jobs",
+            "items": {
+              "type": "object",
+              "properties": {
+                "job_id": {"type": "string"},
+                "url": {"type": "string"},
+                "status": {"type": "string"},
+                "created_at": {"type": "string"},
+                "completed_at": {"type": "string"}
+              }
+            }
+          },
+          "usage_statistics": {
+            "type": "object",
+            "properties": {
+              "total_jobs": {"type": "integer"},
+              "completed_jobs": {"type": "integer"},
+              "credits_used": {"type": "integer"},
+              "success_rate": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "uri": "system://queue-status",
+      "name": "System Queue Status",
+      "description": "Real-time system queue and operational status",
+      "mimeType": "application/json",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "queue_info": {
+            "type": "object",
+            "properties": {
+              "message_count": {"type": "integer"},
+              "consumer_count": {"type": "integer"},
+              "processing_rate": {"type": "number"}
+            }
+          },
+          "system_health": {
+            "type": "object",
+            "properties": {
+              "status": {"type": "string"},
+              "uptime": {"type": "string"},
+              "worker_status": {"type": "array"}
+            }
+          },
+          "job_statistics": {
+            "type": "object",
+            "properties": {
+              "completed_today": {"type": "integer"},
+              "average_processing_time": {"type": "number"},
+              "error_rate": {"type": "number"}
+            }
+          }
+        }
+      }
+    },
+    {
+      "uri": "jobs://recent/{limit}",
+      "name": "Recent Jobs",
+      "description": "List of recent analysis jobs across all users (admin view)",
+      "mimeType": "application/json",
+      "schema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "job_id": {"type": "string"},
+            "url": {"type": "string"},
+            "status": {"type": "string"},
+            "created_at": {"type": "string"},
+            "processing_time": {"type": "number"},
+            "user_id": {"type": "string"}
+          }
+        }
+      }
+    }
+  ]
+}

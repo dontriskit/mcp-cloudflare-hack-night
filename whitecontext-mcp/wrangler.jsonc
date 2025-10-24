@@ -1,0 +1,33 @@
+{
+  "name": "whitecontext-mcp",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-09-29",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./public"
+  },
+  // Durable Objects configuration
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "JOB_TRACKER",
+        "class_name": "JobTracker"
+      },
+      {
+        "name": "RESULTS_CACHE",
+        "class_name": "ResultsCache"
+      }
+    ]
+  },
+  // Durable Objects migrations (SQLite for free plan)
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["JobTracker", "ResultsCache"]
+    }
+  ],
+  // Environment variables (add your API key here or via wrangler secrets)
+  "vars": {
+    "WHITECONTEXT_BASE_URL": "https://whitecontext.com/api"
+  }
+}

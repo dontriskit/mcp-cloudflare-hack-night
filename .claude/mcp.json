@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "whitecontext-local": {
+      "url": "https://whitecontext-mcp.maksym.workers.dev/mcp"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "llms-txt-api",
+  "version": "1.0.0",
+  "description": "MCP server for LLMS-TXT-API - AI-powered GTM intelligence analysis",
+  "author": "LLMS-TXT-API Team",
+  "license": "MIT",
+  "server": {
+    "command": "python",
+    "args": [".mcp/server.py"],
+    "env": {
+      "LLMS_TXT_API_URL": "http://localhost:8000",
+      "LLMS_TXT_API_KEY": ""
+    }
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false,
+    "logging": true
+  },
+  "transport": {
+    "type": "stdio"
+  },
+  "authentication": {
+    "type": "bearer",
+    "header": "Authorization",
+    "prefix": "Bearer "
+  },
+  "metadata": {
+    "category": "business-intelligence",
+    "tags": ["gtm", "analysis", "web-scraping", "ai", "company-research"],
+    "homepage": "https://github.com/yourusername/llms-txt-api",
+    "documentation": "README.md"
+  },
+  "configuration": {
+    "required_env_vars": [
+      "LLMS_TXT_API_KEY"
+    ],
+    "optional_env_vars": [
+      "LLMS_TXT_API_URL"
+    ],
+    "defaults": {
+      "LLMS_TXT_API_URL": "http://localhost:8000"
+    }
+  }
+}

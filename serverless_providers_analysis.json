@@ -1,0 +1,164 @@
+{
+  "analysis_metadata": {
+    "created_at": "2025-10-24T02:56:00Z",
+    "total_providers": 11,
+    "completed_analysis": 2,
+    "pending_analysis": 9,
+    "mcp_server": "whitecontext-local"
+  },
+  "providers": {
+    "cloudflare_workers": {
+      "job_id": "1ed70885-e9df-4c17-a429-edcd96e24da7",
+      "status": "completed",
+      "url": "https://workers.cloudflare.com",
+      "company_name": "Cloudflare Workers",
+      "tldr": "Cloudflare Workers is a globally distributed serverless developer platform leveraging Cloudflare's vast network to run code at the edge in 330+ cities. It offers low-latency compute, AI, and storage solutions with minimal cold starts, predictable pricing, and robust developer tools, positioning itself as an 'AI Cloud' to simplify infrastructure for developers.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Consumption-based, pay-as-you-go, freemium model with transparent pricing for compute, storage, and deployed scripts.",
+        "target_market": "Developers, engineering teams, businesses, and platforms requiring highly scalable, low-latency, and globally distributed application and AI infrastructure."
+      },
+      "scale_indicators": [
+        "Part of Cloudflare's infrastructure powering 20% of the Internet",
+        "Network capacity of 405 Tbps",
+        "Serves over 84 million HTTP requests per second"
+      ],
+      "pricing": {
+        "free_tier": "100k requests/day, 10 ms CPU/request",
+        "paid_tier": "$0.30 per million requests, $0.02 per million CPU ms"
+      },
+      "key_features": [
+        "Workers (global serverless functions)",
+        "Containers (support for any language, anywhere)",
+        "Durable Objects (stateful compute)",
+        "Browser Rendering (automated browsers)",
+        "Workflows (process orchestration)",
+        "One-command deployment to 330+ cities",
+        "Minimal cold starts",
+        "AI capabilities at the edge"
+      ],
+      "competitive_advantages": [
+        "Extensive global network (330+ cities, 50ms latency for 95% of world's population)",
+        "Elimination of cold starts for serverless functions",
+        "Predictable, consumption-based pricing (pay only for active compute)",
+        "Battle-tested infrastructure powering 20% of the Internet",
+        "Comprehensive developer platform with compute, AI, storage, and media solutions"
+      ],
+      "notable_customers": [
+        "Anthropic",
+        "Asana",
+        "Atlassian",
+        "Block",
+        "Canva",
+        "DoorDash",
+        "Intercom",
+        "MLB",
+        "PayPal",
+        "Porsche",
+        "Shopify",
+        "Signal",
+        "Stripe",
+        "Wix"
+      ]
+    },
+    "netlify": {
+      "job_id": "68e2aa25-16bb-4132-9ada-ff6074e81d3a",
+      "status": "completed",
+      "url": "https://netlify.com",
+      "company_name": "Netlify",
+      "tldr": "Netlify is an AI-native web development platform pioneering the Composable Web and Jamstack architectures. Serving over 5 million developers, it simplifies building, deploying, and scaling modern web applications with features like global edge delivery, serverless functions, and AI-driven workflows. With $212 million in funding, Netlify targets individual developers to large enterprises, emphasizing developer experience, speed, and compliance.",
+      "business_model": {
+        "type": "B2B",
+        "revenue_model": "Freemium SaaS with tiered, credit-based usage",
+        "target_market": "Web developers, startups, mid-market businesses, large enterprises, e-commerce, SaaS, agencies, and open-source projects."
+      },
+      "scale_indicators": [
+        "Over 5 million developers have signed up as of September 2024",
+        "Over a billion unique visitors access URLs running on Netlify monthly",
+        "Powers 50 million websites"
+      ],
+      "pricing": {
+        "free_tier": "Available",
+        "personal": "$9/month",
+        "pro": "$20/member/month",
+        "enterprise": "Custom pricing"
+      },
+      "key_features": [
+        "Deploy Previews (automatic URLs for collaborative feedback)",
+        "Agent Runners (AI workflows for code changes)",
+        "AI Gateway (call AI models without managing API keys)",
+        "Functions (serverless APIs, scheduled & background functions)",
+        "Storage Primitives (Netlify DB for Postgres, Netlify Blobs)",
+        "DDoS Protection, WAF, Smart secret detection",
+        "Global Edge Network (100+ locations)",
+        "Git Integration (GitHub, GitLab, Bitbucket)",
+        "Visual Editor (integrated with Stackbit)"
+      ],
+      "competitive_advantages": [
+        "Superior developer experience ('no-ops' approach, Git integration, framework agnostic)",
+        "Exceptional speed and performance through a global Edge Network",
+        "Strong focus on Composable Web architecture",
+        "Early and deep integration of AI into development workflows",
+        "High compliance standards (SOC 2, ISO, PCI, HIPAA for enterprise)",
+        "Coined and pioneered Jamstack architecture"
+      ],
+      "notable_customers": [
+        "Confluent",
+        "LG",
+        "Mattel",
+        "Nestlé",
+        "Riot Games",
+        "Peloton",
+        "Nike",
+        "Twilio",
+        "DocuSign"
+      ],
+      "funding": "$212 million from investors including Andreessen Horowitz, Bessemer Venture Partners, BOND, EQT Ventures, Kleiner Perkins"
+    },
+    "vercel": {
+      "job_id": "b6b11e63-4668-41a3-8f52-e6bcf3b0ac2a",
+      "status": "processing",
+      "url": "https://vercel.com"
+    },
+    "aws_lambda": {
+      "job_id": "825a385b-285d-4f4b-a51c-35ec637b3ba4",
+      "status": "processing",
+      "url": "https://aws.amazon.com/lambda"
+    },
+    "azure_functions": {
+      "job_id": "84893ecd-4f68-472b-94c8-5b2dafcca55d",
+      "status": "processing",
+      "url": "https://azure.microsoft.com/en-us/products/functions"
+    },
+    "google_cloud_functions": {
+      "job_id": "1daf538c-275a-4549-89fc-baa11e6216e0",
+      "status": "processing",
+      "url": "https://cloud.google.com/functions"
+    },
+    "deno_deploy": {
+      "job_id": "92284187-e2b3-47f6-81aa-46a271704016",
+      "status": "processing",
+      "url": "https://deno.com/deploy"
+    },
+    "fly_io": {
+      "job_id": "b5476860-8e05-43c5-827d-bcfefa8460a5",
+      "status": "processing",
+      "url": "https://fly.io"
+    },
+    "railway": {
+      "job_id": "a8722246-889b-4cd6-9db2-9ea1337820d1",
+      "status": "processing",
+      "url": "https://railway.app"
+    },
+    "render": {
+      "job_id": "05b94129-f884-4b04-b08c-da2704bb57c8",
+      "status": "processing",
+      "url": "https://render.com"
+    },
+    "cloudflare": {
+      "job_id": "b443ff70-3d4a-4d32-8b55-aef208832089",
+      "status": "processing",
+      "url": "https://cloudflare.com"
+    }
+  }
+}

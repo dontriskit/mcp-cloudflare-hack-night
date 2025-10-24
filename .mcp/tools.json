@@ -1,0 +1,255 @@
+{
+  "tools": [
+    {
+      "name": "analyze_company",
+      "description": "Analyze a single company website to extract GTM intelligence including business model, products, target market, and competitive insights",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The company website URL to analyze"
+          },
+          "focus_context": {
+            "type": "string",
+            "description": "Optional context to focus the analysis (e.g., 'Payment solutions', 'SaaS platforms')"
+          },
+          "webhook_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional webhook URL to receive completion notifications"
+          }
+        },
+        "required": ["url"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "description": "Unique identifier for the analysis job"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["queued", "processing", "completed", "failed"],
+            "description": "Current job status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the job was created"
+          },
+          "estimated_completion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Estimated completion time (if available)"
+          }
+        }
+      }
+    },
+    {
+      "name": "analyze_companies_batch",
+      "description": "Analyze multiple company websites in batch for GTM intelligence extraction",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "urls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "description": "Array of company website URLs to analyze"
+          },
+          "focus_context": {
+            "type": "string",
+            "description": "Optional context to focus the analysis across all URLs"
+          },
+          "webhook_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Optional webhook URL to receive completion notifications"
+          }
+        },
+        "required": ["urls"]
+      },
+      "outputSchema": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "job_id": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "get_job_result",
+      "description": "Retrieve the analysis results for a completed job or check job status",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "job_id": {
+            "type": "string",
+            "description": "The job ID to retrieve results for"
+          }
+        },
+        "required": ["job_id"]
+      },
+      "outputSchema": {
+        "oneOf": [
+          {
+            "type": "object",
+            "description": "Job still processing",
+            "properties": {
+              "job_id": {"type": "string"},
+              "status": {"type": "string"},
+              "current_stage": {"type": "string"},
+              "created_at": {"type": "string"},
+              "started_at": {"type": "string"}
+            }
+          },
+          {
+            "type": "object",
+            "description": "Completed analysis results",
+            "properties": {
+              "url": {"type": "string"},
+              "gtm_context": {
+                "type": "object",
+                "properties": {
+                  "company_name": {"type": "string"},
+                  "tldr": {"type": "string"},
+                  "business_model": {"type": "object"},
+                  "products_services": {"type": "array"},
+                  "gtm_intelligence": {"type": "object"},
+                  "company_info": {"type": "object"},
+                  "technology": {"type": "object"},
+                  "social_proof": {"type": "object"},
+                  "contact": {"type": "object"}
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "list_jobs",
+      "description": "List user's analysis jobs with optional filtering and pagination",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "status_filter": {
+            "type": "string",
+            "enum": ["queued", "processing", "completed", "failed"],
+            "description": "Filter jobs by status"
+          },
+          "page": {
+            "type": "integer",
+            "minimum": 1,
+            "default": 1,
+            "description": "Page number for pagination"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1000,
+            "default": 100,
+            "description": "Number of jobs per page"
+          }
+        }
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "job_id": {"type": "string"},
+                "status": {"type": "string"},
+                "created_at": {"type": "string"},
+                "url": {"type": "string"}
+              }
+            }
+          },
+          "total": {"type": "integer"},
+          "page": {"type": "integer"},
+          "limit": {"type": "integer"}
+        }
+      }
+    },
+    {
+      "name": "get_user_info",
+      "description": "Get current user information including remaining credits and account status",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "email": {"type": "string"},
+          "credits_remaining": {"type": "integer"},
+          "is_active": {"type": "boolean"}
+        }
+      }
+    },
+    {
+      "name": "get_system_status",
+      "description": "Check system health, queue status, and operational metrics",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "system": {
+            "type": "object",
+            "properties": {
+              "status": {"type": "string"},
+              "timestamp": {"type": "string"},
+              "queue": {
+                "type": "object",
+                "properties": {
+                  "message_count": {"type": "integer"},
+                  "consumer_count": {"type": "integer"}
+                }
+              },
+              "total_jobs": {
+                "type": "object",
+                "properties": {
+                  "completed": {"type": "integer"},
+                  "processing": {"type": "integer"},
+                  "queued": {"type": "integer"},
+                  "failed": {"type": "integer"}
+                }
+              }
+            }
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "id": {"type": "string"},
+              "credits_remaining": {"type": "integer"},
+              "jobs": {"type": "object"}
+            }
+          }
+        }
+      }
+    }
+  ]
+}
