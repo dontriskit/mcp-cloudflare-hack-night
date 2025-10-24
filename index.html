@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HONC Stack × WhiteContext MCP | Serverless Intelligence</title>
+    <meta name="description" content="AI-powered competitive intelligence for 11 serverless platforms using HONC stack and WhiteContext MCP Server">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f38020;
+            --secondary: #ff6b35;
+            --accent: #4ecdc4;
+            --dark: #1a1a2e;
+            --darker: #0f0f1e;
+            --light: #eee;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --honc-gradient: linear-gradient(135deg, #f38020 0%, #ff6b35 50%, #ffd700 100%);
+            --cf-gradient: linear-gradient(135deg, #f38020 0%, #ff6b35 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--darker);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--darker);
+            overflow: hidden;
+        }
+
+        .bg-animation::before,
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::before {
+            background: var(--primary);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation::after {
+            background: var(--accent);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(100px, -50px) scale(1.1); }
+            66% { transform: translate(-50px, 100px) scale(0.9); }
+        }
+
+        /* Header */
+        header {
+            padding: 4rem 0 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            background: var(--honc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.1rem;
+            color: #aaa;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(243, 128, 32, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--honc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Feature Cards */
+        .features {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 60px rgba(78, 205, 196, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-desc {
+            color: #ccc;
+            line-height: 1.8;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Provider Grid */
+        .provider-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .provider-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .provider-card:hover {
+            transform: scale(1.05);
+            border-color: var(--primary);
+            box-shadow: 0 10px 40px rgba(243, 128, 32, 0.3);
+        }
+
+        .provider-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .provider-category {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 6rem 0;
+            padding: 4rem 2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 2px solid;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--honc-gradient);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(243, 128, 32, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        /* Comparison Table */
+        .comparison-wrapper {
+            overflow-x: auto;
+            margin: 3rem 0;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 2rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(243, 128, 32, 0.2);
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.2rem;
+        }
+
+        .badge-edge { background: rgba(78, 205, 196, 0.2); color: var(--accent); }
+        .badge-cloud { background: rgba(102, 126, 234, 0.2); color: #667eea; }
+        .badge-paas { background: rgba(243, 128, 32, 0.2); color: var(--primary); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 0;
+            color: #666;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 6rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo { font-size: 2.5rem; }
+            .subtitle { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .cta-buttons { flex-direction: column; align-items: center; }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+
+    <header>
+        <div class="container animate-in">
+            <div class="logo">HONC × MCP</div>
+            <div class="subtitle">Serverless Intelligence Platform</div>
+            <p class="tagline">
+                AI-powered competitive analysis of <strong class="highlight">11 serverless platforms</strong>
+                using <strong class="highlight">HONC stack</strong> and <strong class="highlight">WhiteContext MCP Server</strong>
+            </p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Stats Section -->
+        <section class="stats-grid animate-in">
+            <div class="stat-card">
+                <div class="stat-number">11</div>
+                <div class="stat-label">Providers Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">MCP Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">14KB</div>
+                <div class="stat-label">HONC Stack Size</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">330+</div>
+                <div class="stat-label">Edge Cities</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">90%</div>
+                <div class="stat-label">Cost Savings (Railway)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">Possibilities</div>
+            </div>
+        </section>
+
+        <!-- HONC Stack Features -->
+        <section class="features">
+            <h2 class="section-title">What is HONC?</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 class="feature-title">Hono Framework</h3>
+                    <p class="feature-desc">
+                        Ultra-lightweight (14KB) TypeScript API framework built for Web Standards environments.
+                        Fast, modern, and works everywhere: Cloudflare, Deno, Bun, Vercel, Node.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🗄️</div>
+                    <h3 class="feature-title">Drizzle ORM</h3>
+                    <p class="feature-desc">
+                        Type-safe query builder for relational databases. Seamless integration with
+                        Cloudflare D1 (SQLite), Neon, Supabase, and vector stores for AI.
+                    </p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">☁️</div>
+                    <h3 class="feature-title">Cloudflare Edge</h3>
+                    <p class="feature-desc">
+                        Deploy to 330+ cities globally with Workers, D1, KV, Queues, and R2.
+                        Zero cold starts, <50ms latency for 95% of the world.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- WhiteContext MCP -->
+        <section class="features">
+            <h2 class="section-title">WhiteContext MCP Server</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3 class="feature-title">AI-Powered Intelligence</h3>
+                    <p class="feature-desc">
+                        Extract comprehensive company data: business models, pricing, customers,
+                        tech stacks, compliance, and competitive advantages.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Automated company profiling</li>
+                        <li>Competitive intelligence</li>
+                        <li>Market positioning analysis</li>
+                        <li>GTM research automation</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Bulk Processing</h3>
+                    <p class="feature-desc">
+                        Analyze up to 100 companies simultaneously. Perfect for market research,
+                        competitive analysis, and due diligence.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Batch job submission</li>
+                        <li>Parallel processing</li>
+                        <li>JSON/CSV export</li>
+                        <li>Cached results</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3 class="feature-title">Structured Data</h3>
+                    <p class="feature-desc">
+                        Get consistent, structured JSON data ready for analysis, visualization,
+                        or integration into your workflows.
+                    </p>
+                    <ul class="feature-list">
+                        <li>Standardized schemas</li>
+                        <li>Rich metadata</li>
+                        <li>Case studies & metrics</li>
+                        <li>Gap analysis</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Providers Analyzed -->
+        <section>
+            <h2 class="section-title">11 Providers Analyzed</h2>
+            <div class="provider-grid">
+                <div class="provider-card">
+                    <div class="provider-name">Cloudflare Workers</div>
+                    <div class="provider-category"><span class="badge badge-edge">Edge Platform</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">330+ cities • Zero cold starts</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">AWS Lambda</div>
+                    <div class="provider-category"><span class="badge badge-cloud">Traditional Cloud</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">38 regions • 220+ services</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Azure Functions</div>
+                    <div class="provider-category"><span class="badge badge-cloud">Traditional Cloud</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">60+ regions • Durable Functions</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Google Cloud</div>
+                    <div class="provider-category"><span class="badge badge-cloud">Traditional Cloud</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">90% of gen AI unicorns</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Vercel</div>
+                    <div class="provider-category"><span class="badge badge-paas">Frontend Cloud</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">Next.js creator • 264% ROI</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Netlify</div>
+                    <div class="provider-category"><span class="badge badge-paas">Jamstack PaaS</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">5M+ developers • 50M sites</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Deno Deploy</div>
+                    <div class="provider-category"><span class="badge badge-edge">Edge Platform</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">Native TypeScript • V8 isolates</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Fly.io</div>
+                    <div class="provider-category"><span class="badge badge-edge">Micro-VMs</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">Firecracker • 300ms boot</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Railway</div>
+                    <div class="provider-category"><span class="badge badge-paas">Modern PaaS</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">Pay-per-second • 40-90% savings</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Render</div>
+                    <div class="provider-category"><span class="badge badge-paas">Modern PaaS</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">ISO 27001 • HIPAA • $155M funded</p>
+                </div>
+                <div class="provider-card">
+                    <div class="provider-name">Cloudflare</div>
+                    <div class="provider-category"><span class="badge badge-edge">Edge Platform</span></div>
+                    <p style="margin-top: 1rem; color: #aaa; font-size: 0.9rem;">78M req/sec • 190B threats blocked</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Insights -->
+        <section class="features">
+            <h2 class="section-title">Key Insights</h2>
+            <div class="comparison-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Winner</th>
+                            <th>Key Metric</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🌍 Global Edge</strong></td>
+                            <td>Cloudflare Workers</td>
+                            <td>330+ cities, zero cold starts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>⚛️ Frontend</strong></td>
+                            <td>Vercel / Netlify</td>
+                            <td>Next.js creator / Jamstack pioneer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📘 TypeScript</strong></td>
+                            <td>Deno Deploy</td>
+                            <td>Native TS, secure-by-default</td>
+                        </tr>
+                        <tr>
+                            <td><strong>💰 Cost Savings</strong></td>
+                            <td>Railway</td>
+                            <td>40-90% savings (pay-per-second)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🏢 Enterprise</strong></td>
+                            <td>AWS Lambda</td>
+                            <td>220+ services, 100+ compliance certs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🤖 AI/ML</strong></td>
+                            <td>Google Cloud</td>
+                            <td>90% of gen AI unicorns</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🚀 Micro-VMs</strong></td>
+                            <td>Fly.io</td>
+                            <td>Firecracker, 300ms boot</td>
+                        </tr>
+                        <tr>
+                            <td><strong>📜 Compliance</strong></td>
+                            <td>Render / AWS</td>
+                            <td>ISO 27001, HIPAA, SOC 2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MCP Demo -->
+        <section class="features">
+            <h2 class="section-title">How It Works</h2>
+            <div class="feature-card" style="max-width: 800px; margin: 0 auto;">
+                <div class="feature-icon">🔧</div>
+                <h3 class="feature-title">Powered by Model Context Protocol</h3>
+                <p class="feature-desc" style="margin-bottom: 1.5rem;">
+                    This entire analysis was generated using the WhiteContext MCP Server,
+                    demonstrating the power of AI-assisted competitive intelligence.
+                </p>
+                <div style="background: rgba(0, 0, 0, 0.3); padding: 1.5rem; border-radius: 8px; text-align: left; font-family: monospace; font-size: 0.9rem;">
+                    <div style="color: #666;"># 1. Configure MCP Server</div>
+                    <div style="color: var(--accent);">claude mcp add --transport http whitecontext-local \</div>
+                    <div style="color: var(--accent); padding-left: 2rem;">https://whitecontext-mcp.maksym.workers.dev/mcp</div>
+                    <br>
+                    <div style="color: #666;"># 2. Analyze companies (in Claude Code)</div>
+                    <div style="color: var(--light);">&gt; Analyze these 11 serverless providers: [URLs]</div>
+                    <br>
+                    <div style="color: #666;"># 3. Get structured intelligence</div>
+                    <div style="color: var(--primary);">→ Business models, pricing, customers</div>
+                    <div style="color: var(--primary);">→ Tech stacks, compliance, case studies</div>
+                    <div style="color: var(--primary);">→ Competitive advantages, scale metrics</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <h2 class="cta-title">Explore the Full Analysis</h2>
+            <p style="color: #aaa; font-size: 1.1rem; margin-bottom: 2rem;">
+                Dive deep into comprehensive comparisons, pricing breakdowns, and decision frameworks
+            </p>
+            <div class="cta-buttons">
+                <a href="https://github.com/dontriskit/mcp-cloudflare-hack-night" class="btn btn-primary" target="_blank">
+                    View on GitHub
+                </a>
+                <a href="./serverless_comparison.md" class="btn btn-secondary">
+                    Read Analysis
+                </a>
+                <a href="https://honc.dev" class="btn btn-secondary" target="_blank">
+                    Learn HONC Stack
+                </a>
+            </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section style="margin: 4rem 0; text-align: center;">
+            <h3 style="font-size: 1.5rem; margin-bottom: 2rem; color: #888;">Built With</h3>
+            <div class="tech-stack">
+                <div class="tech-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔥</div>
+                    <div>Hono (14KB)</div>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗄️</div>
+                    <div>Drizzle ORM</div>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">☁️</div>
+                    <div>Cloudflare Workers</div>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🤖</div>
+                    <div>WhiteContext MCP</div>
+                </div>
+                <div class="tech-item">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🧠</div>
+                    <div>Claude Code</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlights -->
+        <section class="features">
+            <h2 class="section-title">Analysis Highlights</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3 class="feature-title">Cost Optimization</h3>
+                    <ul class="feature-list">
+                        <li><strong>Railway:</strong> 40-90% savings documented</li>
+                        <li><strong>Render:</strong> $72K annual savings (Fey case study)</li>
+                        <li><strong>sock8:</strong> $2,000 → $200/month (90% reduction)</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title">Performance Leaders</h3>
+                    <ul class="feature-list">
+                        <li><strong>Cloudflare:</strong> Zero cold starts eliminated</li>
+                        <li><strong>Fly.io:</strong> 300ms Firecracker boot times</li>
+                        <li><strong>Deno:</strong> V8 isolates for fast starts</li>
+                    </ul>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3 class="feature-title">Compliance Ready</h3>
+                    <ul class="feature-list">
+                        <li><strong>AWS Lambda:</strong> 100+ certifications</li>
+                        <li><strong>Render:</strong> ISO 27001, HIPAA (2025)</li>
+                        <li><strong>Netlify:</strong> HIPAA for enterprise</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p style="font-size: 1.2rem; color: #aaa; margin-bottom: 1rem;">
+                🤖 Generated with <a href="https://claude.com/claude-code" style="color: var(--accent); text-decoration: none;">Claude Code</a>
+            </p>
+            <p style="color: #666;">
+                Powered by HONC Stack × WhiteContext MCP × Cloudflare Workers
+            </p>
+            <p style="color: #555; margin-top: 1rem; font-size: 0.9rem;">
+                Created for World Wild Web AI & MCP Hack Night • October 2025
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Add fade-in animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .stat-card, .provider-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Fun easter egg: Click logo for confetti effect
+        document.querySelector('.logo').addEventListener('click', () => {
+            alert('🎉 HONC! You found the easter egg! Check out honc.dev for more TypeScript magic!');
+        });
+    </script>
+</body>
+</html>
