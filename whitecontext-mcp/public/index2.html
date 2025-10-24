@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WhiteContext MCP Server | HONC Stack × Cloudflare Workers</title>
+    <meta name="description" content="AI-powered company intelligence MCP server built with HONC stack on Cloudflare Workers">
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      :root {
+        --orange: #f38020;
+        --orange-light: #ff9e4a;
+        --orange-dark: #d16d1a;
+        --black: #000000;
+        --dark: #0a0a0a;
+        --darker: #050505;
+        --gray: #333333;
+        --gray-light: #666666;
+        --gray-lighter: #999999;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: var(--black);
+        color: var(--gray-lighter);
+        min-height: 100vh;
+        line-height: 1.6;
+      }
+
+      /* Animated background */
+      .bg-glow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+        pointer-events: none;
+      }
+
+      .bg-glow::before,
+      .bg-glow::after {
+        content: '';
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.08;
+        animation: float 25s infinite ease-in-out;
+      }
+
+      .bg-glow::before {
+        width: 600px;
+        height: 600px;
+        background: var(--orange);
+        top: -300px;
+        right: -200px;
+      }
+
+      .bg-glow::after {
+        width: 500px;
+        height: 500px;
+        background: var(--orange-light);
+        bottom: -200px;
+        left: -100px;
+        animation-delay: 12s;
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(-80px, 120px) scale(1.1); }
+        66% { transform: translate(100px, -80px) scale(0.9); }
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+      }
+
+      /* Header */
+      header {
+        text-align: center;
+        padding: 4rem 0 3rem;
+        border-bottom: 1px solid var(--gray);
+      }
+
+      .logo {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: var(--orange);
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 30px rgba(243, 128, 32, 0.3);
+        letter-spacing: -2px;
+      }
+
+      .logo span {
+        color: var(--gray-lighter);
+        font-weight: 400;
+      }
+
+      .subtitle {
+        font-size: 1.3rem;
+        color: var(--orange-light);
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .description {
+        color: var(--gray-light);
+        max-width: 700px;
+        margin: 0 auto;
+        font-size: 1.05rem;
+      }
+
+      /* Status Bar */
+      .status-bar {
+        display: flex;
+        justify-content: space-around;
+        gap: 2rem;
+        margin: 3rem 0;
+        padding: 2rem;
+        background: var(--dark);
+        border: 1px solid var(--gray);
+        border-radius: 12px;
+      }
+
+      .status-item {
+        text-align: center;
+        flex: 1;
+      }
+
+      .status-label {
+        font-size: 0.85rem;
+        color: var(--gray-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+      }
+
+      .status-value {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: var(--orange);
+        font-family: 'Courier New', monospace;
+      }
+
+      /* Section */
+      .section {
+        margin: 4rem 0;
+      }
+
+      .section-title {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--orange);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px solid var(--gray);
+      }
+
+      .section-text {
+        color: var(--gray-lighter);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+      }
+
+      /* Tools Grid */
+      .tools-grid {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .tool-card {
+        background: var(--dark);
+        border: 1px solid var(--gray);
+        border-left: 3px solid var(--orange);
+        border-radius: 8px;
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .tool-card:hover {
+        border-left-width: 6px;
+        background: var(--darker);
+        box-shadow: 0 4px 20px rgba(243, 128, 32, 0.15);
+        transform: translateX(4px);
+      }
+
+      .tool-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.75rem;
+      }
+
+      .tool-name {
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--orange);
+      }
+
+      .tool-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .badge-retrieval { background: rgba(243, 128, 32, 0.2); color: var(--orange-light); border: 1px solid var(--orange-dark); }
+      .badge-submission { background: rgba(255, 158, 74, 0.15); color: var(--orange-light); border: 1px solid var(--orange); }
+      .badge-auto { background: rgba(243, 128, 32, 0.1); color: var(--orange); border: 1px solid var(--gray); }
+
+      .tool-desc {
+        color: var(--gray-lighter);
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      /* Code Block */
+      .code-block {
+        background: var(--darker);
+        border: 1px solid var(--gray);
+        border-radius: 8px;
+        padding: 1.5rem;
+        overflow-x: auto;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+        margin: 1.5rem 0;
+        color: var(--gray-lighter);
+      }
+
+      .code-block .comment {
+        color: var(--gray-light);
+      }
+
+      .code-block .key {
+        color: var(--orange-light);
+      }
+
+      .code-block .string {
+        color: var(--orange);
+      }
+
+      /* Links */
+      .links-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .link-card {
+        background: var(--dark);
+        border: 1px solid var(--gray);
+        border-radius: 8px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: block;
+      }
+
+      .link-card:hover {
+        border-color: var(--orange);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(243, 128, 32, 0.2);
+      }
+
+      .link-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .link-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--orange);
+        margin-bottom: 0.5rem;
+      }
+
+      .link-desc {
+        color: var(--gray-light);
+        font-size: 0.9rem;
+      }
+
+      /* Endpoint Badge */
+      .endpoint {
+        background: var(--orange);
+        color: var(--black);
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-family: 'Courier New', monospace;
+        font-weight: 700;
+        display: inline-block;
+        margin: 0.5rem 0;
+        font-size: 1.1rem;
+      }
+
+      /* Footer */
+      footer {
+        text-align: center;
+        padding: 3rem 0;
+        margin-top: 4rem;
+        border-top: 1px solid var(--gray);
+        color: var(--gray-light);
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin: 1.5rem 0;
+        flex-wrap: wrap;
+      }
+
+      .footer-link {
+        color: var(--orange);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      .footer-link:hover {
+        color: var(--orange-light);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container { padding: 1rem; }
+        .logo { font-size: 2.5rem; }
+        .subtitle { font-size: 1.1rem; }
+        .status-bar { flex-direction: column; gap: 1rem; }
+        .links-grid { grid-template-columns: 1fr; }
+      }
+
+      /* Highlight */
+      .highlight {
+        color: var(--orange);
+        font-weight: 600;
+      }
+
+      a {
+        color: var(--orange-light);
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: var(--orange);
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow"></div>
+
+    <div class="container">
+      <header>
+        <div class="logo">WhiteContext<span> MCP</span></div>
+        <div class="subtitle">Company Intelligence API</div>
+        <p class="description">
+          AI-powered competitive intelligence for your <span class="highlight">MCP clients</span>.
+          Built with the <span class="highlight">HONC stack</span> on <span class="highlight">Cloudflare Workers</span>.
+        </p>
+        <div style="margin-top: 2rem;">
+          <div class="endpoint">/mcp</div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Status -->
+        <div class="status-bar">
+          <div class="status-item">
+            <div class="status-label">Status</div>
+            <div class="status-value" id="status">●</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Protocol</div>
+            <div class="status-value">MCP</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Version</div>
+            <div class="status-value">1.0</div>
+          </div>
+          <div class="status-item">
+            <div class="status-label">Tools</div>
+            <div class="status-value">11</div>
+          </div>
+        </div>
+
+        <!-- About -->
+        <section class="section">
+          <h2 class="section-title">About</h2>
+          <p class="section-text">
+            WhiteContext MCP Server provides <strong class="highlight">automated company intelligence analysis</strong>
+            for AI assistants. Submit any company URL and receive comprehensive business intelligence including:
+          </p>
+          <ul style="list-style: none; margin-top: 1rem; padding-left: 0;">
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Business models</span> and revenue strategies
+            </li>
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Pricing structures</span> and customer segments
+            </li>
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Technology stacks</span> and integrations
+            </li>
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Competitive advantages</span> and market positioning
+            </li>
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Customer case studies</span> and testimonials
+            </li>
+            <li style="padding: 0.5rem 0; color: var(--gray-lighter);">
+              → <span class="highlight">Compliance certifications</span> and security
+            </li>
+          </ul>
+        </section>
+
+        <!-- Built With -->
+        <section class="section">
+          <h2 class="section-title">Built With HONC Stack</h2>
+          <p class="section-text">
+            This MCP server leverages the <strong class="highlight">HONC stack</strong> — a modern,
+            lightweight approach to building type-safe, edge-enabled APIs.
+          </p>
+          <div class="links-grid">
+            <a href="https://honc.dev" target="_blank" class="link-card">
+              <div class="link-icon">🔥</div>
+              <div class="link-title">HONC Stack</div>
+              <div class="link-desc">Hono + ORM + Neon + Cloudflare</div>
+            </a>
+            <a href="https://fiberplane.dev" target="_blank" class="link-card">
+              <div class="link-icon">🧵</div>
+              <div class="link-title">Fiberplane</div>
+              <div class="link-desc">MCP Server Platform</div>
+            </a>
+            <a href="https://developers.cloudflare.com/workers/" target="_blank" class="link-card">
+              <div class="link-icon">☁️</div>
+              <div class="link-title">Cloudflare Workers</div>
+              <div class="link-desc">Global Edge Computing</div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Available Tools -->
+        <section class="section">
+          <h2 class="section-title">Available Tools</h2>
+
+          <h3 style="color: var(--orange-light); margin-top: 2rem; margin-bottom: 1rem; font-size: 1.3rem;">
+            📥 Retrieval Tools
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">get_job_results</div>
+                <span class="tool-badge badge-retrieval">Retrieval</span>
+              </div>
+              <div class="tool-desc">
+                Fetch complete analysis results for a job. Automatically cached for performance.
+                Supports JSON and CSV formats.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">get_batch_results</div>
+                <span class="tool-badge badge-retrieval">Retrieval</span>
+              </div>
+              <div class="tool-desc">
+                Retrieve results for multiple companies analyzed in a batch.
+                Perfect for comparative analysis.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">check_job_status</div>
+                <span class="tool-badge badge-retrieval">Retrieval</span>
+              </div>
+              <div class="tool-desc">
+                Quick status check without polling. Returns processing stage and completion status.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">download_results</div>
+                <span class="tool-badge badge-retrieval">Retrieval</span>
+              </div>
+              <div class="tool-desc">
+                Export results in JSON or CSV format. Useful for spreadsheets and data analysis.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">list_jobs</div>
+                <span class="tool-badge badge-retrieval">Retrieval</span>
+              </div>
+              <div class="tool-desc">
+                View recent job history with status and timestamps. Find job IDs easily.
+              </div>
+            </div>
+          </div>
+
+          <h3 style="color: var(--orange-light); margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.3rem;">
+            📤 Submission Tools
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">submit_job</div>
+                <span class="tool-badge badge-submission">Submission</span>
+              </div>
+              <div class="tool-desc">
+                Submit a single URL for analysis. Returns job_id immediately for async tracking.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">submit_bulk_job</div>
+                <span class="tool-badge badge-submission">Submission</span>
+              </div>
+              <div class="tool-desc">
+                Submit up to 100 URLs for batch analysis. Ideal for competitive intelligence research.
+              </div>
+            </div>
+          </div>
+
+          <h3 style="color: var(--orange-light); margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.3rem;">
+            ⚡ Auto-Polling Tools
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">analyze_url_wait</div>
+                <span class="tool-badge badge-auto">Auto-Poll</span>
+              </div>
+              <div class="tool-desc">
+                Submit URL and automatically wait for completion (up to 5 minutes). Returns full results.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">analyze_bulk_wait</div>
+                <span class="tool-badge badge-auto">Auto-Poll</span>
+              </div>
+              <div class="tool-desc">
+                Submit multiple URLs and wait for batch completion (up to 10 minutes). All results returned.
+              </div>
+            </div>
+          </div>
+
+          <h3 style="color: var(--orange-light); margin-top: 2.5rem; margin-bottom: 1rem; font-size: 1.3rem;">
+            🔧 Management Tools
+          </h3>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">configure_webhook</div>
+                <span class="tool-badge badge-submission">Config</span>
+              </div>
+              <div class="tool-desc">
+                Configure webhook URL to receive notifications when jobs complete.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-header">
+                <div class="tool-name">clear_cache</div>
+                <span class="tool-badge badge-submission">Config</span>
+              </div>
+              <div class="tool-desc">
+                Clear cached results for a specific URL or all cached results.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Quick Start -->
+        <section class="section">
+          <h2 class="section-title">Quick Start</h2>
+          <p class="section-text">
+            Connect to this MCP server using Claude Code or any MCP-compatible client:
+          </p>
+          <div class="code-block">
+<span class="comment"># Install the MCP server</span>
+claude mcp add --transport http whitecontext-local \
+  https://whitecontext-mcp.maksym.workers.dev/mcp
+
+<span class="comment"># Or add to your .mcp.json</span>
+{
+  <span class="key">"mcpServers"</span>: {
+    <span class="key">"whitecontext-local"</span>: {
+      <span class="key">"type"</span>: <span class="string">"http"</span>,
+      <span class="key">"url"</span>: <span class="string">"https://whitecontext-mcp.maksym.workers.dev/mcp"</span>
+    }
+  }
+}
+          </div>
+
+          <p class="section-text" style="margin-top: 2rem;">
+            Example usage in Claude Code:
+          </p>
+          <div class="code-block">
+<span class="comment">// Analyze a single company</span>
+> Analyze https://stripe.com and give me their pricing model
+
+<span class="comment">// Batch analysis</span>
+> Compare these 5 companies: [URLs]
+
+<span class="comment">// Get structured data</span>
+> List all my recent analysis jobs
+          </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+          <h2 class="section-title">Use Cases</h2>
+          <div class="tools-grid">
+            <div class="tool-card">
+              <div class="tool-name">🎯 Competitive Intelligence</div>
+              <div class="tool-desc">
+                Automatically extract competitor business models, pricing, and market positioning
+                for strategic planning.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-name">💼 Sales & GTM Research</div>
+              <div class="tool-desc">
+                Understand prospects before outreach. Get comprehensive company profiles,
+                customers, and tech stacks.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-name">📊 Market Analysis</div>
+              <div class="tool-desc">
+                Compare multiple companies in a sector. Analyze trends, pricing models,
+                and growth signals.
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-name">🔍 Due Diligence</div>
+              <div class="tool-desc">
+                Comprehensive company research including funding, leadership, compliance,
+                and intelligence gaps.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tech Stack -->
+        <section class="section">
+          <h2 class="section-title">Technology Stack</h2>
+          <div class="links-grid">
+            <div class="link-card">
+              <div class="link-icon">🔥</div>
+              <div class="link-title">Hono Framework</div>
+              <div class="link-desc">Ultra-lightweight (14KB) TypeScript API framework</div>
+            </div>
+            <div class="link-card">
+              <div class="link-icon">🗄️</div>
+              <div class="link-title">Drizzle ORM</div>
+              <div class="link-desc">Type-safe database queries</div>
+            </div>
+            <div class="link-card">
+              <div class="link-icon">☁️</div>
+              <div class="link-title">Cloudflare Workers</div>
+              <div class="link-desc">330+ cities, zero cold starts</div>
+            </div>
+            <div class="link-card">
+              <div class="link-icon">🧠</div>
+              <div class="link-title">Durable Objects</div>
+              <div class="link-desc">Stateful edge compute</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Resources -->
+        <section class="section">
+          <h2 class="section-title">Learn More</h2>
+          <div class="links-grid">
+            <a href="https://honc.dev" target="_blank" class="link-card">
+              <div class="link-icon">📚</div>
+              <div class="link-title">HONC Documentation</div>
+              <div class="link-desc">Learn the HONC stack</div>
+            </a>
+            <a href="https://fiberplane.dev" target="_blank" class="link-card">
+              <div class="link-icon">🛠️</div>
+              <div class="link-title">Fiberplane</div>
+              <div class="link-desc">Build MCP servers easily</div>
+            </a>
+            <a href="https://developers.cloudflare.com/workers/" target="_blank" class="link-card">
+              <div class="link-icon">📖</div>
+              <div class="link-title">Cloudflare Workers Docs</div>
+              <div class="link-desc">Edge computing platform</div>
+            </a>
+            <a href="https://github.com/dontriskit/mcp-cloudflare-hack-night" target="_blank" class="link-card">
+              <div class="link-icon">💻</div>
+              <div class="link-title">View Source</div>
+              <div class="link-desc">GitHub repository</div>
+            </a>
+          </div>
+        </section>
+
+        <!-- Example Output -->
+        <section class="section">
+          <h2 class="section-title">Example Output</h2>
+          <p class="section-text">
+            Sample structured intelligence for a serverless provider:
+          </p>
+          <div class="code-block">
+{
+  <span class="key">"company_name"</span>: <span class="string">"Cloudflare Workers"</span>,
+  <span class="key">"business_model"</span>: {
+    <span class="key">"type"</span>: <span class="string">"B2B"</span>,
+    <span class="key">"revenue_model"</span>: <span class="string">"Consumption-based, pay-as-you-go"</span>
+  },
+  <span class="key">"scale_indicators"</span>: [
+    <span class="string">"84M HTTP requests/sec"</span>,
+    <span class="string">"330+ cities globally"</span>,
+    <span class="string">"Powers 20% of the Internet"</span>
+  ],
+  <span class="key">"competitive_advantages"</span>: [
+    <span class="string">"Eliminated cold starts"</span>,
+    <span class="string">"<50ms latency for 95% of global population"</span>
+  ],
+  <span class="key">"notable_customers"</span>: [
+    <span class="string">"Anthropic"</span>, <span class="string">"Stripe"</span>, <span class="string">"Shopify"</span>
+  ]
+}
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+          🤖 <span class="highlight">WhiteContext MCP Server</span>
+        </p>
+        <div class="footer-links">
+          <a href="https://honc.dev" target="_blank" class="footer-link">HONC Stack</a>
+          <a href="https://fiberplane.dev" target="_blank" class="footer-link">Fiberplane</a>
+          <a href="https://developers.cloudflare.com/workers/" target="_blank" class="footer-link">Cloudflare Workers</a>
+          <a href="https://github.com/dontriskit/mcp-cloudflare-hack-night" target="_blank" class="footer-link">GitHub</a>
+        </div>
+        <p style="color: var(--gray-light); margin-top: 1.5rem; font-size: 0.9rem;">
+          Built for World Wild Web AI & MCP Hack Night • October 2025
+        </p>
+        <p style="color: var(--gray); margin-top: 0.5rem; font-size: 0.85rem;">
+          Powered by Hono (14KB) + Cloudflare Workers + Durable Objects
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Check server health
+      fetch('/health')
+        .then(resp => resp.json())
+        .then(data => {
+          const statusEl = document.getElementById('status');
+          if (data.status === 'healthy') {
+            statusEl.textContent = '✓';
+            statusEl.style.color = 'var(--orange)';
+          } else {
+            statusEl.textContent = '✗';
+            statusEl.style.color = '#999';
+          }
+        })
+        .catch(() => {
+          const statusEl = document.getElementById('status');
+          statusEl.textContent = '?';
+          statusEl.style.color = '#666';
+        });
+
+      // Fun logo animation on click
+      document.querySelector('.logo').addEventListener('click', function() {
+        this.style.transform = 'scale(1.1) rotate(5deg)';
+        setTimeout(() => {
+          this.style.transform = '';
+        }, 200);
+      });
+
+      // Add smooth transition to logo
+      document.querySelector('.logo').style.transition = 'all 0.2s ease';
+    </script>
+  </body>
+</html>
